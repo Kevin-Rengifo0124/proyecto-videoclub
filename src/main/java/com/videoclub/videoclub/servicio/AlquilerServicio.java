@@ -4,9 +4,11 @@ import com.videoclub.videoclub.dto.AlquilerDTO;
 import com.videoclub.videoclub.entidad.Alquiler;
 import com.videoclub.videoclub.entidad.Cliente;
 import com.videoclub.videoclub.entidad.Pelicula;
+import com.videoclub.videoclub.enums.TipoPelicula;
 import com.videoclub.videoclub.repositorio.impl.ClienteRepositorio;
 import com.videoclub.videoclub.repositorio.impl.PeliculaRepositorio;
 import org.springframework.stereotype.Service;
+import util.GestionPrecios;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +25,18 @@ public class AlquilerServicio {
         this.clienteRepositorio = clienteRepositorio;
     }
 
-    public void realizarAlquiler(AlquilerDTO alquilerDTO){
+    public double realizarAlquiler(AlquilerDTO alquilerDTO) {
 
         Cliente cliente = clienteRepositorio.obtenerPorId(alquilerDTO.getClienteId());
         Pelicula pelicula = peliculaRepositorio.obtenerPorId(alquilerDTO.getPeliculaId());
 
-        if (cliente != null && pelicula != null){
+        if (cliente != null && pelicula != null) {
 
+            double precio = GestionPrecios.calcularPrecio(pelicula.getTipoPelicula(), alquilerDTO.getDiasAlquiler());
+            alquileres.add(new Alquiler((alquileres.size() + 1), cliente, pelicula, alquilerDTO.getDiasAlquiler(), precio));
+            cliente.setPuntosFidelizacion(cliente.getPuntosFidelizacion() + (pelicula.getTipoPelicula() == TipoPelicula.NUEVO_LANZAMIENTO ? 2 : 1));
+            return precio;
         }
+        throw new RuntimeException("Cliente o Película no encontrada");
     }
 }
