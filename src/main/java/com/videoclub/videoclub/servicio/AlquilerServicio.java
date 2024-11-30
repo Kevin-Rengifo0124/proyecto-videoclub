@@ -39,4 +39,12 @@ public class AlquilerServicio {
         }
         throw new RuntimeException("Cliente o Película no encontrada");
     }
+
+    public int obtenerPuntosFidelizacion(int clienteId) {
+        Cliente cliente = clienteRepositorio.obtenerPorId(clienteId);
+        if (cliente != null) {
+            return cliente.getPuntosFidelizacion();
+        }
+        throw new RuntimeException("Cliente no encontrado");
+    }
 }

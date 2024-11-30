@@ -27,8 +27,8 @@ public class PeliculaControlador implements Obtener<PeliculaDTO> {
         return peliculaServicio.obtenerTodasLasPeliculas();
     }
 
-    @GetMapping("/tipo/{tipo}")
-    public List<PeliculaDTO> obtenerPorTipoPelicula(@PathVariable TipoPelicula tipoPelicula) {
+    @GetMapping("/tipo/{tipoPelicula}")
+    public List<PeliculaDTO> obtenerPorTipoPelicula(@PathVariable("tipoPelicula") TipoPelicula tipoPelicula) {
         return peliculaServicio.obtenerPorTipo(tipoPelicula);
     }
 

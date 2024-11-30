@@ -39,7 +39,7 @@ public class PeliculaRepositorio implements Gestion<Pelicula> {
     }
 
     public List<Pelicula> obtenerPorTipoPelicula(TipoPelicula tipoPelicula) {
-        return peliculas.stream().filter(pelicula -> pelicula.getTipoPelicula().equals(tipoPelicula)).collect(Collectors.toList());
+        return peliculas.stream().filter(pelicula -> pelicula.getTipoPelicula() == tipoPelicula).collect(Collectors.toList());
     }
 
 }
